@@ -15,7 +15,7 @@ import (
 // }
 
 // 支付宝异步通知（对应notify_url）
-func AliPayNotify(req *http.Request) (url.Values, error) {
+func AlipayNotify(req *http.Request) (url.Values, error) {
 	if err := req.ParseForm(); err != nil {
 		log.Printf("Error: %v", err)
 		return nil, err
@@ -34,7 +34,7 @@ func AliPayNotify(req *http.Request) (url.Values, error) {
 
 // 支付宝支付完成后页面跳转返回（对应return_url）
 // 注意返回后会丢失cookie信息，需要做特殊处理重新设置cookie（比如把cookie放入passback_params字段），不然会掉线
-func AliPayReturn(req *http.Request) (url.Values, error) {
+func AlipayReturn(req *http.Request) (url.Values, error) {
 	var query = req.URL.Query()
 	if err := Alipay.VerifyResponseURL(query); err != nil {
 		log.Printf("Error: %v", err)

@@ -8,12 +8,12 @@ go get github.com/worldlove/alipay
 ```
 
 ## 开发理念
-1. 简单 |
+1. 简单
    - 使用url.Values 和 map[string]string 表达数据结构
    - 付宝重新设计之后，多数参数都是通用的，没必要为每个接口创建一个struct
    - 直接可以使用ulr.Values.Encode()自动排序和编码
 
-2. 高效 |
+2. 高效
    - 复用全局Alipay 客户端对象(必须在调用接口之前先初始化全局Alipay对象)
    - 增加异步调用逻辑，可以将转账、查询等操作发送到异步调用链
 
@@ -104,6 +104,18 @@ var content = map[string]string{
 }
 
 payURL := alipay.DefaultPagePay(content)
+
+// 网页支付返回(参数为http.Request, 支持各种框架)
+// 例：使用gin框架
+func AlipayPageReturn(c *gin.Context) {
+    values, err := alipay.AlipayReturn(c.Request)
+}
+
+// 各种支付异步通知(参数为http.Request, 支持各种框架)
+// 例：使用gin框架
+func AlipayNotify(c *gin.Context) {
+    values, err := alipay.AlipayNotify(c.Request)
+}
 
 ```
 ### 手机WAP支付 API
